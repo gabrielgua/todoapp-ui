@@ -1,3 +1,12 @@
-<div>
-    <button (click)="login()">Login</button>
+<div class="container">
+    <div class="titulo">
+        <h1>Bem-vindo, faça o login para continuar</h1>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-raised-button color="accent" class="btn-login" (click)="login()">Login</button>
+    <div class="cadastro-link">
+        <span>
+            Ou <a href="#">Cadastre-se</a>.
+        </span>
+    </div>
 </div>

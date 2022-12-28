@@ -25,7 +25,17 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.randomGradient = this.gerarCorDePerfil();
-    this.getUsuarioLogado();
+    if (this.logado()) {
+      this.getUsuarioLogado();
+    }
+  }
+
+  logado(): boolean {
+    if (this.auth.jwtPayload) {
+      return true;
+    }
+
+    return false;
   }
 
   getUsuarioLogado(): void {

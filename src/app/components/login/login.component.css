@@ -1,0 +1,33 @@
+.container {
+    max-width: 20%;
+    background-color: transparent;
+}
+
+.titulo {
+    color: var(--primary-dark);
+}
+
+mat-divider {
+    margin-bottom: 1.5rem;
+}
+
+.btn-login {
+    padding: .5rem;
+    width: 100%;
+}
+
+.cadastro-link {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--secondary-text-dark);
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-dark);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+

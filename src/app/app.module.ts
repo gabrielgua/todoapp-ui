@@ -35,6 +35,7 @@ import { API_CONFIG } from './config/api-config';
 import { AuthInterceptor } from './auth/auth.inteceptor';
 import { LoginComponent } from './components/login/login.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { CadastroComponent } from './components/cadastro/cadastro.component';
 registerLocaleData(localePT);
 
 export function tokenGetter(): string {
@@ -52,6 +53,7 @@ export function tokenGetter(): string {
     AuthorizedComponent,
     LoginComponent,
     PerfilComponent,
+    CadastroComponent,
   ],
   imports: [
     BrowserModule,
