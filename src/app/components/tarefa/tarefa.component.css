@@ -1,0 +1,107 @@
+.data-hoje {
+    display: flex;
+    align-items: center;
+    font-size: larger;
+    gap: 1rem;
+}
+
+.div-botao-adicionar-e-titulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.div-botao-adicionar-e-titulo > h1 {
+    margin: 0;
+    color: var(--primary-dark);
+    font-size: x-large;
+}
+
+.data-adicionar {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem .5rem;
+    margin-bottom: 1.5rem;
+}
+
+.grupo-tarefas-div {
+    padding: 1rem;
+    background-color: var(--dark-dark);
+    border-radius: .5rem;
+}
+
+.tarefas-div {
+    margin-top: 1rem;
+}
+
+.tarefa-card {
+    margin: 1rem;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0rem 0rem 0rem;
+    border: none;
+    box-shadow: none;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+}
+
+.nenhuma-tarefa {
+    color: var(--secondary-text-dark);
+    margin: 0;
+}
+
+.nenhuma-tarefa > p {
+    margin: 0;
+}
+
+.div-concluido {
+    box-shadow: none;
+    padding: 0;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.responsive-divider {
+    display: none;
+}
+
+@media screen and (max-width: 750px) {
+
+    .data-adicionar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .tarefa-card {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .id {
+        width: 100%;
+        align-self: flex-start;
+    }
+
+    .responsive-divider {
+        display: block;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .div-concluido {
+        justify-content: flex-start;
+    }
+
+}

@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+
+body { margin: auto; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: var(--dark-dark);}
+
+:root {
+    --primary-dark: #C2185B;
+    --accent-dark: #676B6E;
+    --warn: #F44336;
+    --success: rgb(164, 209, 164);
+    --secondary-text-dark: rgba(255,255,255,.7);
+    --background-dark: #303030;    
+    --dark-dark: #242424;
+    --primary-light: #3F51B5;
+    --accent-light: #FF4081;
+    --header: #424242;
+}
+
+.container {
+    margin: auto;
+    width: 60%;
+    padding: 1.5rem;
+    max-width: 60%;
+    min-width: max-content;
+    background-color: var(--background-dark);
+    border-radius: .5rem;
+}
+
+@media screen and (max-width: 750px) {
+    .container {
+        min-width: 423px;
+    }
+}

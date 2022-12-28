@@ -1,0 +1,24 @@
+<mat-card class="card">
+    <div class="header">
+        <mat-card-title *ngIf="!tarefa.id">Adicionar tarefa</mat-card-title>
+        <mat-card-title *ngIf="tarefa.id">Editar tarefa #{{data.id}}</mat-card-title>
+        <mat-divider></mat-divider>
+    </div>
+    <form>
+        <mat-form-field appearance="outline" color="accent" style="width: 100%">
+            <mat-label>Título</mat-label>
+            <input 
+                type="text" 
+                [(ngModel)]="tarefa.titulo"                
+                name="titulo"
+                [formControl]="titulo"
+                matInput 
+                placeholder="Digite o título da Tarefa" 
+                maxlength="50"
+                text="data.titulo"
+                >
+            <mat-icon color="primary" matSuffix>title</mat-icon>
+        </mat-form-field>
+        <button (click)="salvar()" [disabled]="!validaCampos()" mat-raised-button color="primary">Enviar</button>
+    </form>   
+</mat-card> 

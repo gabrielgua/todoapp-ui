@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="header">
+        <div class="titulo">
+            <h1>todoApp</h1>
+            <mat-divider class="responsive-divider"></mat-divider>
+            <div class="menu">
+                <div class="menu-tarefas">
+                    <mat-divider class="responsive-divider-vertical" vertical="true" style="height: 2.5rem;"></mat-divider>
+                    <a routerLink="/home">Tarefas</a>
+                </div>
+                
+                <div class="perfil">
+                    {{usuarioLogado.primeiroNome}}
+                    <button mat-icon-button color="accent" matTooltip="Você" [matMenuTriggerFor]="menu">
+                        <mat-icon>person</mat-icon>
+                    </button>
+                </div>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <a mat-menu-item routerLink="/perfil">
+                      <mat-icon>edit</mat-icon>
+                      <span>Perfil</span>
+                    </a>
+                    <button mat-menu-item (click)="logout()">
+                      <mat-icon color="accent">logout</mat-icon>
+                      <span>Sair</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+</div>
+
