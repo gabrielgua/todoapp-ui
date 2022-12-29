@@ -20,13 +20,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-
-
 
 import localePT from '@angular/common/locales/pt';
 import { HeaderComponent } from './components/header/header.component';
@@ -73,6 +71,7 @@ export function tokenGetter(): string {
     MatInputModule,
     MatTabsModule,
     MatTooltipModule,
+    FormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,

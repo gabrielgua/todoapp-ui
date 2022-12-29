@@ -2,13 +2,6 @@
     padding: 0px;
 }
 
-.card{
-    margin: 0;
-    padding: 0;
-    box-shadow: none;
-    width: 100%;
-}
-
 mat-divider {
     margin-bottom: 1rem;
 }

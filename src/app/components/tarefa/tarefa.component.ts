@@ -4,9 +4,15 @@ import { FadeInFromBottom, FadeLeftToRight, FadeOut, FinishedBorder, } from 'src
 import { AuthService } from 'src/app/auth/auth.service';
 import { DataTarefa } from 'src/app/models/data-tarefa';
 import { Tarefa } from 'src/app/models/tarefa';
+import { TarefaRequest } from 'src/app/models/tarefa-request';
 import { TarefaService } from 'src/app/services/tarefa.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DialogComponent } from '../dialog/dialog.component';
+
+export interface TarefaData {
+  id: any;
+  titulo: any;
+}
 
 @Component({
   selector: 'app-tarefa',
@@ -19,6 +25,7 @@ import { DialogComponent } from '../dialog/dialog.component';
     FadeOut
   ]
 })
+
 export class TarefaComponent implements OnInit {
 
   concluido: boolean = false;
@@ -35,7 +42,8 @@ export class TarefaComponent implements OnInit {
     statusAnimation: false,
   }
   
-  dialogRef!: MatDialogRef<ConfirmDialogComponent>;
+  dialogConfirm!: MatDialogRef<ConfirmDialogComponent>;
+  dialogForm!: MatDialogRef<DialogComponent>;
   
   constructor(
     private service: TarefaService,
@@ -48,67 +56,107 @@ export class TarefaComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuarioId = this.auth.jwtPayload.usuario_id;
-    this.buscarTodos(-1);
+    this.buscarTodos();
   }
   
   teste() {
     return true;
   }
 
-  buscarTodos(i: number): any {
+  buscarTodos(id?: number): any {
     this.service.buscarTodos(this.usuarioId).subscribe(resp => {
       this.TAREFAS = resp;
-      if (i != -1) {
-        this.TAREFAS[i].statusAnimation = true;      
-      }
+      this.TAREFAS.forEach(tarefa => {
+          if (tarefa.id == id) {
+            tarefa.statusAnimation = true;
+          }
+      });
       this.separarPorData(this.TAREFAS);
     });
 
   }
 
-  concluirTarefa(i: any) {
-    this.service.concluirTarefa(this.TAREFAS[i].id).subscribe(resp => {
-      this.buscarTodos(i);
+  concluirTarefa(id: any) {
+    this.service.concluirTarefa(id).subscribe(resp => {
+      this.buscarTodos(id);
     }); 
   }
 
   remover(id: any) {
     this.service.removerPorId(id).subscribe(() => {
-      this.buscarTodos(-1);
+      this.buscarTodos();
     })
   }
 
   abrirDialog(id: any): void {
-    this.dialogRef = this.confirmDialog.open(ConfirmDialogComponent);
-    this.dialogRef.componentInstance.msg = 'Você tem certeza que deseja remover esta Tarefa?';
-    this.dialogRef.componentInstance.titulo = 'Remover Tarefa #' + id + '?';
+    this.dialogConfirm = this.confirmDialog.open(ConfirmDialogComponent);
+    this.dialogConfirm.componentInstance.msg = 'Você tem certeza que deseja remover esta Tarefa?';
+    this.dialogConfirm.componentInstance.titulo = 'Remover Tarefa #' + id + '?';
 
-    this.dialogRef.afterClosed().subscribe(res => {
+    this.dialogConfirm.afterClosed().subscribe(res => {
       if (res) {
         this.remover(id);
       } 
     })
   }
 
-  abrirDialogAddTarefa(id: any) {
-    this.dialog.open(DialogComponent, {
-      data: {
-        id: id
-      },
+  abrirDialogAddTarefa() {
+    this.dialogForm = this.dialog.open(DialogComponent, {
       width: '50rem',
-      autoFocus: true,
+      data: { id: null, titulo: null }
+    });
+
+    this.dialogForm.afterClosed().subscribe(res => {
+      if(res) {
+        
+        this.salvar(res);
+      }
     })
   }
 
   abrirDialogEditTarefa(id: any) {
-    this.dialog.open(DialogComponent, {
-      data: {
-        id: id
-      }
-    })
+    this.service.buscarPorId(id)
+      .then((tarefa: Tarefa) => {
+        this.tarefa = tarefa;
+
+        this.dialogForm = this.dialog.open(DialogComponent, {
+          width: '50rem',
+          data: { id: this.tarefa.id, titulo: this.tarefa.titulo }
+        })
+    
+        this.dialogForm.afterClosed().subscribe(res => {
+          if (res) {
+            this.editar(res, id);
+          }
+        })
+      }).catch(() => {
+        console.log('Erro ao consultar tarefa com id: ' + id);
+      });
   }
-  
-  
+
+  editar(titulo: string, id: number): void {
+    var tarefaRequest = new TarefaRequest();
+    tarefaRequest.titulo = titulo; 
+
+    this.service.editar(tarefaRequest, id)
+      .then((tarefa: Tarefa) => {
+        this.buscarTodos();
+      }).catch(() => {
+        console.log('Erro ao editar tarefa de id: ' + id);
+      });
+  }
+
+  salvar(titulo: string): void {
+    var tarefaRequest = new TarefaRequest();
+    tarefaRequest.titulo = titulo; 
+
+    this.service.salvar(tarefaRequest)
+      .then((tarefa: any) => {
+        this.buscarTodos();
+      }).catch(() => {
+        console.log('Erro ao adicionar Tarefa');
+      })
+  }
 
   separarPorData(tarefas: Array<Tarefa>) {
     tarefas.forEach(t => {

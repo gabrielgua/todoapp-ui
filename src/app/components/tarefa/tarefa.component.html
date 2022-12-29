@@ -2,7 +2,7 @@
     <div class="data-adicionar">
         <div class="div-botao-adicionar-e-titulo">
             <h1>Suas Tarefas</h1>
-            <button mat-mini-fab matTooltip="Adicionar tarefa" matTooltipPosition="right" color="accent" (click)="abrirDialogAddTarefa(-1)">
+            <button mat-mini-fab matTooltip="Adicionar tarefa" matTooltipPosition="right" color="accent" (click)="abrirDialogAddTarefa()">
                 <mat-icon style="color: white">add</mat-icon>
             </button>
         </div>
@@ -35,7 +35,7 @@
                                         </div>
                                         
                                         <div class="actions"> 
-                                            <button (click)="concluirTarefa(i)" matTooltip="Desfazer" mat-mini-fab color="primary">
+                                            <button (click)="concluirTarefa(t.id)" matTooltip="Desfazer" mat-mini-fab color="primary">
                                                 <mat-icon style="color: white">refresh</mat-icon>
                                             </button>
                                             <button mat-icon-button color="primary"(click)="abrirDialog(t.id)" matTooltip="Remover" >
@@ -45,7 +45,7 @@
                                     </mat-card>
                                 </div>
                                 <div *ngIf="!t.concluida">
-                                    <button (click)="concluirTarefa(i)" matTooltip="Concluir" matTooltipPosition="left" mat-fab color="primary" style="margin-right: 1rem;" >
+                                    <button (click)="concluirTarefa(t.id)" matTooltip="Concluir" matTooltipPosition="left" mat-fab color="primary" style="margin-right: 1rem;" >
                                         <mat-icon>check</mat-icon>
                                     </button>
                                     <button mat-icon-button color="accent" matTooltip="Editar" (click)="abrirDialogEditTarefa(t.id)">
