@@ -40,8 +40,16 @@ export class HeaderComponent implements OnInit {
 
   getUsuarioLogado(): void {
     this.usuarioLogado.nomeCompleto = this.auth.jwtPayload.usuario_nome;
-    this.usuarioLogado.primeiroNome = this.usuarioLogado.nomeCompleto.substring(0, this.usuarioLogado.nomeCompleto.indexOf(' '));
+    this.usuarioLogado.primeiroNome = this.getPrimeiroNome();
     this.usuarioLogado.email = this.auth.jwtPayload.sub;
+  }
+
+  getPrimeiroNome(): string {
+    if (this.usuarioLogado.nomeCompleto.includes(' ')) {
+      return this.usuarioLogado.nomeCompleto.substring(0, this.usuarioLogado.nomeCompleto.indexOf(' '));
+    } else {
+      return this.usuarioLogado.nomeCompleto;
+    }
   }
 
   gerarCorDePerfil(): string {

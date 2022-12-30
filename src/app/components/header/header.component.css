@@ -5,6 +5,7 @@
 
 h1 {
     margin: 0;
+    color: var(--primary-dark);
 }
 
 .header {
@@ -14,7 +15,7 @@ h1 {
     box-shadow: none;
     border-radius: .5rem;
     padding: 1rem 1.5rem;
-    color: whitesmoke;
+    color: var(--secondary-text-dark);
     background-color: var(--header);
 }
 
@@ -45,7 +46,7 @@ h1 {
 
 .menu-tarefas > a {
     text-decoration: none;
-    color: whitesmoke;
+    color: var(--secondary-text-dark);
 }
 
 .menu-tarefas > a:hover {

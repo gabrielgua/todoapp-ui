@@ -3,18 +3,22 @@
     <h1 mat-dialog-title *ngIf="data.id">Editar tarefa #{{data.id}}</h1>
     <mat-divider></mat-divider>
 </div>
-<div mat-dialog-content>
-    <mat-form-field appearance="outline" color="accent" style="width: 100%">
-        <mat-label>Título</mat-label>
-        <input 
-            matInput 
-            [(ngModel)]="data.titulo"                
-            placeholder="Digite o título da Tarefa" 
-            maxlength="50"
-            text="data.titulo"
-            >
-        <mat-icon color="primary" matSuffix>title</mat-icon>
-    </mat-form-field>
-</div>
-<button mat-raised-button color="primary" [mat-dialog-close]="data.titulo" [disabled]="!validaCampos()"  >Enviar</button>
-<button mat-button color="primary" (click)="onNoClick()">Cancelar</button>
+<form>
+    <div mat-dialog-content>
+        <mat-form-field appearance="outline" color="accent" style="width: 100%">
+            <mat-label>Título</mat-label>
+            <input 
+                matInput 
+                [formControl]="titulo"                
+                placeholder="Digite o título da Tarefa" 
+                maxlength="50"
+                >
+            <mat-icon color="primary" matSuffix>title</mat-icon>
+            <mat-error *ngIf="titulo.invalid">{{getTarefaErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button type="submit" color="primary" [mat-dialog-close]="titulo.value" [disabled]="!validaCampos()">Enviar</button>
+        <button mat-button style="color: whitesmoke;" (click)="onNoClick()">Cancelar</button>
+    </div>      
+</form>

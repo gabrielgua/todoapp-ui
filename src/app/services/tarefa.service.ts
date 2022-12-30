@@ -12,8 +12,8 @@ export class TarefaService {
 
   constructor(private http: HttpClient) { }
 
-  buscarTodos(usuarioId: number): Observable<Tarefa[]> {
-    return this.http.get<Tarefa[]>(`${API_CONFIG.baseUrl}/usuarios/${usuarioId}/tarefas`);
+  buscarTodos(usuarioId: number): Promise<Tarefa[]> {
+    return firstValueFrom(this.http.get<Tarefa[]>(`${API_CONFIG.baseUrl}/usuarios/${usuarioId}/tarefas`));
   }
 
   buscarPorId(id: any): Promise<Tarefa> {
@@ -28,11 +28,11 @@ export class TarefaService {
     return firstValueFrom(this.http.put<TarefaRequest>(`${API_CONFIG.baseUrl}/tarefas/${id}`, tarefaRequest));
   }
 
-  concluirTarefa(id: any): Observable<Tarefa> {
-    return this.http.get<Tarefa>(`${API_CONFIG.baseUrl}/tarefas/concluir/${id}`);
+  concluirTarefa(id: any): Promise<Tarefa> {
+    return firstValueFrom(this.http.get<Tarefa>(`${API_CONFIG.baseUrl}/tarefas/concluir/${id}`));
   }
 
-  removerPorId(id: any): Observable<Tarefa> {
-    return this.http.delete<Tarefa>(`${API_CONFIG.baseUrl}/tarefas/${id}`)
+  removerPorId(id: any): Promise<Tarefa> {
+    return firstValueFrom(this.http.delete<Tarefa>(`${API_CONFIG.baseUrl}/tarefas/${id}`));
   }
 }

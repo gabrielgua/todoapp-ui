@@ -1,7 +1,6 @@
 .container {
     max-width: 423px;
     background-color: transparent;
-    border: 1px solid var(--accent-dark);
 }
 
 .titulo {

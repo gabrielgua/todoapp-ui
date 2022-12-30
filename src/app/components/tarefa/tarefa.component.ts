@@ -8,6 +8,7 @@ import { TarefaRequest } from 'src/app/models/tarefa-request';
 import { TarefaService } from 'src/app/services/tarefa.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DialogComponent } from '../dialog/dialog.component';
+import { SnackBarService } from '../shred/snack-bar.service';
 
 export interface TarefaData {
   id: any;
@@ -49,7 +50,8 @@ export class TarefaComponent implements OnInit {
     private service: TarefaService,
     private confirmDialog: MatDialog,
     private dialog: MatDialog,
-    private auth: AuthService
+    private auth: AuthService,
+    private alert: SnackBarService
   ) { }
 
 
@@ -64,27 +66,44 @@ export class TarefaComponent implements OnInit {
   }
 
   buscarTodos(id?: number): any {
-    this.service.buscarTodos(this.usuarioId).subscribe(resp => {
-      this.TAREFAS = resp;
-      this.TAREFAS.forEach(tarefa => {
-          if (tarefa.id == id) {
-            tarefa.statusAnimation = true;
-          }
-      });
+    this.service.buscarTodos(this.usuarioId)
+      .then((tarefas: Tarefa[]) => {
+      this.TAREFAS = tarefas;
+      if (id) {
+        this.setStatusAnimacao(id);
+      }
       this.separarPorData(this.TAREFAS);
     });
 
   }
 
-  concluirTarefa(id: any) {
-    this.service.concluirTarefa(id).subscribe(resp => {
-      this.buscarTodos(id);
-    }); 
+  setStatusAnimacao(id: number): void {
+    this.TAREFAS.forEach(tarefa => {
+      if (tarefa.id == id) {
+        tarefa.statusAnimation = true;
+      }
+    })
   }
 
-  remover(id: any) {
-    this.service.removerPorId(id).subscribe(() => {
+  concluirTarefa(id: any): void {
+    this.service.concluirTarefa(id)
+      .then(() => {
+        this.buscarTodos(id);
+      })
+      .catch((error: any) => {
+        this.alert.abrirSnackBar('Erro ao concluir ou desfazer tarefa.', 'error');
+        console.log(error);
+      }); 
+  }
+
+  remover(id: any): void {
+    this.service.removerPorId(id).then(() => {
       this.buscarTodos();
+      this.alert.abrirSnackBar('Tarefa removida com sucesso.', 'success');
+    }).catch((error: any) => {
+      console.log('Erro ao remover tarefa.');
+      console.log(error);
+      this.alert.abrirSnackBar('Erro ao remover tarefa.', 'erro');
     })
   }
 
@@ -141,8 +160,11 @@ export class TarefaComponent implements OnInit {
     this.service.editar(tarefaRequest, id)
       .then((tarefa: Tarefa) => {
         this.buscarTodos();
+        this.alert.abrirSnackBar('Tarefa editada com sucesso.', 'success');
       }).catch(() => {
         console.log('Erro ao editar tarefa de id: ' + id);
+        this.alert.abrirSnackBar('Erro ao editar a tarefa.', 'error');
+
       });
   }
 
@@ -153,8 +175,10 @@ export class TarefaComponent implements OnInit {
     this.service.salvar(tarefaRequest)
       .then((tarefa: any) => {
         this.buscarTodos();
+        this.alert.abrirSnackBar('Tarefa adicionada com sucesso.', 'success');
       }).catch(() => {
         console.log('Erro ao adicionar Tarefa');
+        this.alert.abrirSnackBar('Erro ao adicionar tarefa.', 'error');
       })
   }
 

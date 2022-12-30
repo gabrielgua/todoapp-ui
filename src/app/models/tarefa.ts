@@ -1,5 +1,5 @@
 export class Tarefa {
-    id?: any
+    id?: number
     titulo?: string
     concluida?: boolean
     dataCriacao?: string

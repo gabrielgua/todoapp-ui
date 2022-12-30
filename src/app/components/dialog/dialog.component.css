@@ -6,5 +6,9 @@ mat-divider {
     margin-bottom: 1rem;
 }
 
+mat-error {
+    font-size: small;
+}
+
 
 

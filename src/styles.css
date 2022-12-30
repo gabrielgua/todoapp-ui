@@ -25,12 +25,16 @@ body { margin: auto; font-family: Roboto, "Helvetica Neue", sans-serif; backgrou
     border-radius: .5rem;
 }
 
+.snack-bar {
+    background-color: var(--background-dark);
+}
+
 .snack-bar-success {
-    color: green;
+    color: var(--success);
 }
 
 .snack-bar-error {
-    color: crimson;
+    color: var(--warn);
 }
 
 @media screen and (max-width: 750px) {
