@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (!request.url.includes('/oauth2/token') && this.authService.isAccessTokenValido()) {
+    if (!request.url.includes('/oauth2/token') && !request.url.includes('/usuarios') && this.authService.isAccessTokenValido()) {
       return from(this.authService.gerarTokenComRefreshToken())
         .pipe(
           mergeMap(() => {

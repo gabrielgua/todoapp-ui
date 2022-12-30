@@ -25,6 +25,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import localePT from '@angular/common/locales/pt';
 import { HeaderComponent } from './components/header/header.component';
@@ -72,6 +73,7 @@ export function tokenGetter(): string {
     MatTabsModule,
     MatTooltipModule,
     FormsModule,
+    MatSnackBarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,

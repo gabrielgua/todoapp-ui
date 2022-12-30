@@ -25,6 +25,14 @@ body { margin: auto; font-family: Roboto, "Helvetica Neue", sans-serif; backgrou
     border-radius: .5rem;
 }
 
+.snack-bar-success {
+    color: green;
+}
+
+.snack-bar-error {
+    color: crimson;
+}
+
 @media screen and (max-width: 750px) {
     .container {
         min-width: 423px;

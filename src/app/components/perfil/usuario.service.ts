@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { API_CONFIG } from 'src/app/config/api-config';
 import { Usuario } from 'src/app/models/usuario';
+import { UsuarioRequest } from '../cadastro/cadastro.component';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,13 @@ export class UsuarioService {
     var usuarioId = this.auth.jwtPayload.usuario_id;
 
     return firstValueFrom(this.http.get<Usuario>(`${API_CONFIG.baseUrl}/usuarios/${usuarioId}`));
+  }
+
+  salvar(usuarioRequest: UsuarioRequest): Promise<Usuario> {
+    return firstValueFrom(this.http.post<UsuarioRequest>(`${API_CONFIG.baseUrl}/usuarios`, usuarioRequest));
+  }
+
+  editar(usuarioRequest: UsuarioRequest, usuarioId: number): Promise<Usuario> {
+    return firstValueFrom(this.http.put<UsuarioRequest>(`${API_CONFIG.baseUrl}/usuarios/${usuarioId}`, usuarioRequest));
   }
 }

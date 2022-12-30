@@ -1,0 +1,49 @@
+.container {
+    max-width: 423px;
+    min-width: 423px;
+    background-color: transparent;
+    border: 1px solid var(--accent-dark);
+}
+
+.titulo {
+    color: var(--primary-dark);
+}
+
+mat-divider {
+    margin-top: 1rem;
+}
+
+mat-form-field {
+    width: 100%;
+    color: whitesmoke;
+}
+
+mat-error {
+    font-size: small;
+}
+
+input {
+    font-size: medium;
+}
+
+.btn-cadastro {
+    margin-top: 1rem;
+    padding: .5rem;
+    width: 100%;
+}
+
+.login-link {
+    padding-top: 1.5rem;
+    text-align: center;
+    color: var(--secondary-text-dark);
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-dark);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+

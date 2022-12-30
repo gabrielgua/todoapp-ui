@@ -1,1 +1,42 @@
-<p>cadastro works!</p>
+<div class="container">
+    <div class="titulo">
+        <h1>Cadastro</h1>
+    </div>
+    <form #cadastroForm="ngForm" autocomplete="off" (submit)="cadastrar(cadastroForm)">
+        <mat-form-field appearance="outline" color="accent" >
+            <mat-label>Nome</mat-label>
+            <input class="input-cadastro" matInput [formControl]="nome" type="text" placeholder="Entre com seu nome completo.">
+            <button mat-icon-button matSuffix disabled="true">
+                <mat-icon color="accent">person</mat-icon>
+            </button>
+            <mat-error *ngIf="nome.invalid">{{getNomeErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent" >
+            <mat-label>E-mail</mat-label>
+            <input class="input-cadastro" matInput [formControl]="email" type="email" placeholder="Entre com seu e-mail.">
+            <button mat-icon-button matSuffix disabled="true">
+                <mat-icon color="accent">email</mat-icon>
+            </button>
+            <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Senha</mat-label>
+            <input class="input-cadastro" matInput [formControl]="senha" type="{{esconder? 'password' : 'text' }}" placeholder="Entre com a senha.">
+            <button mat-icon-button matSuffix (click)="esconder = !esconder">
+                <mat-icon color="accent">{{esconder? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="senha.invalid">{{getSenhaErrorMessage()}}</mat-error>
+        </mat-form-field>
+        
+        <button mat-raised-button color="accent" class="btn-cadastro" [disabled]="!isValido()">Enviar</button>
+        <mat-divider></mat-divider>
+
+    </form>
+    
+    <div class="login-link">
+        <span>
+            Já tem uma conta? <a routerLink="/login">Login</a>.
+        </span>
+    </div>
+</div>

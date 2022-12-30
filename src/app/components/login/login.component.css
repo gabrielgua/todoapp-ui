@@ -1,6 +1,7 @@
 .container {
-    max-width: 20%;
+    max-width: 423px;
     background-color: transparent;
+    border: 1px solid var(--accent-dark);
 }
 
 .titulo {
@@ -8,7 +9,7 @@
 }
 
 mat-divider {
-    margin-bottom: 1.5rem;
+    margin-top: 1rem;
 }
 
 .btn-login {
@@ -17,7 +18,7 @@ mat-divider {
 }
 
 .cadastro-link {
-    padding: 1.5rem;
+    padding-top: 1.5rem;
     text-align: center;
     color: var(--secondary-text-dark);
 }
