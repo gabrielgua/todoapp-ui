@@ -18,7 +18,6 @@ export class UsuarioService {
 
   getUsuarioLogado(): Promise<Usuario> {
     var usuarioId = this.auth.jwtPayload.usuario_id;
-
     return firstValueFrom(this.http.get<Usuario>(`${API_CONFIG.baseUrl}/usuarios/${usuarioId}`));
   }
 

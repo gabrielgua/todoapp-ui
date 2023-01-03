@@ -1,9 +1,12 @@
+.container {
+    max-width: 423px;
+}
+
 .titulo {
     display: flex;
     align-items: center;
-    color: whitesmoke;
-    padding: 0rem .0rem;
-    padding-top: .25rem;
+    padding: .5rem;
+    margin-bottom: 1rem;
 }
 
 h3 {
@@ -17,37 +20,33 @@ h3 {
     font-size: x-large;
 }
 
+
 .icon-perfil {
-    margin: 0;
-    color: var(--secondary-text-dark);
+    color: whitesmoke;
 }
 
 .dados {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1rem;
-
-}
-
-.dado {
-    padding: 1rem;
+    padding: 1.5rem;
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
     background-color: var(--dark-dark);
     border-radius: .5rem;
 }
 
-.label {
+.dado {
     display: flex;
-    align-items: center;
-    gap: .5rem;
-    width: max-content;
-    color: whitesmoke;
-    background-color: var(--accent-dark);
-    padding: .5rem 1rem .5rem .8rem;
-    border-radius: 2rem;
+    flex-direction: column;
 }
+
+.dado > h3 {
+    color: var(--secondary-text-dark);
+}
+
+mat-divider {
+    margin-bottom: 1rem;
+}
+
+
 
 
 

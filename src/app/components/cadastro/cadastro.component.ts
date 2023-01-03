@@ -3,7 +3,7 @@ import { FormControl, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from '../perfil/usuario.service';
-import { SnackBarService } from '../shred/snack-bar.service';
+import { SnackBarService } from '../shared/snack-bar.service';
 
 export class UsuarioRequest {
   nome?: string;

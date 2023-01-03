@@ -4,6 +4,8 @@ import { API_CONFIG } from '../config/api-config';
 import * as CryptoJS from 'crypto-js';
 import { firstValueFrom } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Usuario } from '../models/usuario';
+import { UsuarioService } from '../components/perfil/usuario.service';
 
 
 @Injectable({
@@ -14,6 +16,7 @@ export class AuthService {
   oAuthTokenUrl = API_CONFIG.baseUrl + '/oauth2/token';
   oAuthAuthorizeUrl = API_CONFIG.baseUrl + '/oauth2/authorize';
   jwtPayload: any;
+  usuarioLogado = new Usuario();
 
   constructor(
     private http: HttpClient,
@@ -112,9 +115,9 @@ export class AuthService {
         console.error('Erro ao gerar o Access Token com o Refresh Token', error);
         return Promise.resolve();
       })
-
-
   }
+
+  
 
   temQualquerPermissao(permissoes: any) {
     for (const permissao of permissoes) {

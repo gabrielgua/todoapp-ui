@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Usuario } from 'src/app/models/usuario';
 import { DialogComponent } from '../dialog/dialog.component';
+import { UsuarioService } from '../perfil/usuario.service';
+import { HeaderService } from './header.service';
 
 
 @Component({
@@ -11,20 +15,13 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class HeaderComponent implements OnInit {
 
-  randomGradient: string = '';
-  borderGradient: string = '';
-  usuarioLogado = {
-    primeiroNome: '',
-    nomeCompleto: '',
-    email: '',
-  }
-  
   constructor(
     private dialog: MatDialog,
-    private auth: AuthService) { }
+    private auth: AuthService,
+    public headerService: HeaderService,
+    ) {}
 
   ngOnInit(): void {
-    this.randomGradient = this.gerarCorDePerfil();
     if (this.logado()) {
       this.getUsuarioLogado();
     }
@@ -39,32 +36,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getUsuarioLogado(): void {
-    this.usuarioLogado.nomeCompleto = this.auth.jwtPayload.usuario_nome;
-    this.usuarioLogado.primeiroNome = this.getPrimeiroNome();
-    this.usuarioLogado.email = this.auth.jwtPayload.sub;
-  }
-
-  getPrimeiroNome(): string {
-    if (this.usuarioLogado.nomeCompleto.includes(' ')) {
-      return this.usuarioLogado.nomeCompleto.substring(0, this.usuarioLogado.nomeCompleto.indexOf(' '));
-    } else {
-      return this.usuarioLogado.nomeCompleto;
-    }
-  }
-
-  gerarCorDePerfil(): string {
-    var cor = this.gerarCor();
-    this.borderGradient = `2px solid ${cor}`
-    return `linear-gradient(150deg, var(--accent-dark), ${cor})`;
-  }
-
-  gerarCor(): string {    
-    var randomColor = Math.floor(0x1000000 * Math.random()).toString(16);
-    return '#' + ('000000' + randomColor).slice(-6);
-  }
-
-  gerarAngulo(): any {
-    return Math.floor(Math.random() * 360);
+    this.headerService.carregarUsuario()
   }
 
   abrirDialogAddTarefa(id: any) {

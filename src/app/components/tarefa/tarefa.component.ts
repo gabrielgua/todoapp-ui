@@ -8,7 +8,7 @@ import { TarefaRequest } from 'src/app/models/tarefa-request';
 import { TarefaService } from 'src/app/services/tarefa.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DialogComponent } from '../dialog/dialog.component';
-import { SnackBarService } from '../shred/snack-bar.service';
+import { SnackBarService } from '../shared/snack-bar.service';
 
 export interface TarefaData {
   id: any;
