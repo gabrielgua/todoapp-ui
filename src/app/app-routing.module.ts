@@ -5,6 +5,7 @@ import { AuthorizedComponent } from './components/authorized/authorized.componen
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { LoginComponent } from './components/login/login.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { SenhaComponent } from './components/perfil/senha/senha.component';
 import { TarefaComponent } from './components/tarefa/tarefa.component';
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
   { path: 'home', component: TarefaComponent, canActivate: [AuthGuard] },
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
+  { path: 'senha', component: SenhaComponent, canActivate: [AuthGuard] },
 
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },

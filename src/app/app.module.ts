@@ -35,6 +35,7 @@ import { AuthInterceptor } from './auth/auth.inteceptor';
 import { LoginComponent } from './components/login/login.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { SenhaComponent } from './components/perfil/senha/senha.component';
 registerLocaleData(localePT);
 
 export function tokenGetter(): string {
@@ -53,6 +54,7 @@ export function tokenGetter(): string {
     LoginComponent,
     PerfilComponent,
     CadastroComponent,
+    SenhaComponent,
   ],
   imports: [
     BrowserModule,

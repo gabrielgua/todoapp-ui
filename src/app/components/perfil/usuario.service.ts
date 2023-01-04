@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { API_CONFIG } from 'src/app/config/api-config';
+import { SenhaRequest } from 'src/app/models/senha-request';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioRequest } from '../cadastro/cadastro.component';
 
@@ -27,5 +28,9 @@ export class UsuarioService {
 
   editar(usuarioRequest: UsuarioRequest, usuarioId: number): Promise<Usuario> {
     return firstValueFrom(this.http.put<UsuarioRequest>(`${API_CONFIG.baseUrl}/usuarios/${usuarioId}`, usuarioRequest));
+  }
+
+  alterarSenha(usuarioId: number, senhaRequest: SenhaRequest): Promise<SenhaRequest> {
+    return firstValueFrom(this.http.put<SenhaRequest>(`${API_CONFIG.baseUrl}/usuarios/${usuarioId}/senha`, senhaRequest));
   }
 }

@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="titulo">
+        <h1>Alterar Senha</h1>            
+    </div>
+    <form [formGroup]="senhaGroup" class="dados" (ngSubmit)="alterarSenha()">
+        
+        <mat-form-field class="dado" color="accent" appearance="outline">
+            <mat-label>Senha atual</mat-label>
+            <input matInput formControlName="senhaAtual" [errorStateMatcher]="senhaAtualMatcher" id="senhaAtual" style="color: var(--secondary-text-dark);">
+            <mat-icon matSuffix class="icon-perfil">key</mat-icon>
+            <mat-error *ngIf="senhaGroup.hasError('required', 'senhaAtual')">Senha atual é obrigatória.</mat-error>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field class="dado" color="accent" appearance="outline">
+            <mat-label>Nova senha</mat-label>
+            <input matInput formControlName="senhaNova" [errorStateMatcher]="senhaAtualMatcher" id="senhaNova" style="color: var(--secondary-text-dark);">
+            <mat-icon matSuffix class="icon-perfil">key</mat-icon>
+            <mat-error *ngIf="senhaGroup.invalid">{{getErroSenhaNovaMessage()}}</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="dado" color="accent" appearance="outline">
+            <mat-label>Confirme a nova senha</mat-label>
+            <input matInput formControlName="senhaConfirmacao" [errorStateMatcher]="senhaConfirmacaoMatcher" id="senhaConfirmacao" style="color: var(--secondary-text-dark);">
+            <mat-icon matSuffix class="icon-perfil">key</mat-icon>
+            <mat-error *ngIf="senhaGroup.invalid">{{getErroSenhaNovaConfirmacaoMessage()}}</mat-error>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <button [disabled]="!isValid()" type="submit" mat-raised-button color="accent">Enviar</button>
+        <a routerLink="/perfil">Voltar</a>
+    </form>
+</div>

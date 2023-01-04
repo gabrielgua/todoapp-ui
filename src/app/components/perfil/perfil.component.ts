@@ -15,8 +15,8 @@ export class PerfilComponent implements OnInit {
 
   usuarioLogado = new Usuario();
   usuarioRequest = new UsuarioRequest();
-  nome = new FormControl(this.usuarioLogado.nome, [Validators.required])
-  email = new FormControl(this.usuarioLogado.email, [Validators.required, Validators.email])
+  nome = new FormControl(this.usuarioLogado.nome, [Validators.required]);
+  email = new FormControl(this.usuarioLogado.email, [Validators.required, Validators.email]);
 
  
   constructor(
