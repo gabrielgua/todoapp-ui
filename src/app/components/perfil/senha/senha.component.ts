@@ -1,25 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
+import { SenhaNovaErrorStateMatcher, ErrorStateMatcherGenerico, SenhaConfirmacaoErrorStateMatcher } from 'src/app/models/error-state-matchers';
+import { SenhaRequest } from 'src/app/models/senha-request';
+import { SnackBarService } from '../../shared/snack-bar.service';
 import { UsuarioService } from '../usuario.service';
 
-export class SenhaAtualStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const invalidCtrl = !!(control && control.dirty);
-    const invalidParent = !!(control && control.parent && control.parent.touched && control.parent.dirty);
-
-    return ((invalidCtrl || invalidParent));
-  }
-}
-
-export class SenhaConfirmacaoMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const invalidCtrl = !!(control && control.invalid && control.parent?.dirty);
-    const invalidParent = !!(control && control.parent && control.parent.dirty);
-
-    return ((invalidCtrl || invalidParent) && control.valid);
-  }
-}
 
 @Component({
   selector: 'app-senha',
@@ -28,24 +15,46 @@ export class SenhaConfirmacaoMatcher implements ErrorStateMatcher {
 })
 export class SenhaComponent implements OnInit {
 
+  
+
   senhaGroup = new FormGroup({
     senhaAtual: new FormControl('', [Validators.required]),
     senhaNova: new FormControl('', [Validators.required, Validators.minLength(6)]),
     senhaConfirmacao: new FormControl('', [Validators.required])
-  }, {validators: [this.isDiferente(), this.isIgual()]});
+  }, {validators: [this.differentThan(), this.equalsTo()]});
+  
 
-  senhaAtualMatcher = new SenhaAtualStateMatcher();
-  senhaConfirmacaoMatcher = new SenhaConfirmacaoMatcher
+  senhaNovaMatcher = new SenhaNovaErrorStateMatcher();
+  senhaAtualMatcher = new ErrorStateMatcherGenerico();
+  senhaConfirmacaoMatcher = new SenhaConfirmacaoErrorStateMatcher();
   
   constructor(
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private alert: SnackBarService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
   }
 
   alterarSenha() {
+    if (this.senhaGroup.valid) {
+      var senhaRequest = new SenhaRequest();
 
+      senhaRequest.senhaAtual = this.senhaGroup.get('senhaAtual')?.value!;
+      senhaRequest.senhaNova = this.senhaGroup.get('senhaNova')?.value!;
+      var usuarioId = this.usuarioService.getUsuarioIdLogado();
+
+      this.usuarioService.alterarSenha(usuarioId, senhaRequest)
+        .then(() => {
+          this.alert.abrirSnackBar('Senha alterada com sucesso.', 'success');
+          this.router.navigate(['perfil'])
+        }).catch((error: any) => {
+          this.alert.abrirSnackBar(error.error.userMessage, 'error');
+          console.log('Erro ao alterar senha.');          
+        })
+
+    }
   }
 
   getErroSenhaNovaMessage() {
@@ -66,24 +75,23 @@ export class SenhaComponent implements OnInit {
     return this.senhaGroup.hasError('required', 'senhaConfirmacao') ? 'Confirmação da senha nova é obrigatória' : '';
   }
 
-  isIgual(): ValidatorFn {
+  differentThan(): ValidatorFn {
     return (group: AbstractControl): ValidationErrors | null => {
-      
-      const senha = group.get('senhaNova')?.value;
-      const senhaConfirmacao = group.get('senhaConfirmacao')?.value;
-      return senha === senhaConfirmacao ? null : { notSame: true };
-    }
-  }
-
-  isDiferente(): ValidatorFn {
-    return (group: AbstractControl): ValidationErrors | null => {
-      
       const senhaAtual = group.get('senhaAtual')?.value;
       const senhaNova = group.get('senhaNova')?.value;
+
       return senhaAtual === senhaNova ? { isSame: true } : null;
-    }
+    };
   }
 
+  equalsTo(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const senhaNova = group.get('senhaNova')?.value;
+      const senhaConfirmacao = group.get('senhaConfirmacao')?.value;
+
+      return senhaNova === senhaConfirmacao ? null : { notSame: true };
+    };
+  }
 
   isValid() {
     return this.senhaGroup.valid;

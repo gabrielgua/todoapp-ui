@@ -5,6 +5,7 @@ import { UsuarioRequest } from '../cadastro/cadastro.component';
 import { SnackBarService } from '../shared/snack-bar.service';
 import { HeaderService } from '../header/header.service';
 import { UsuarioService } from './usuario.service';
+import { ErrorStateMatcherGenerico } from 'src/app/models/error-state-matchers';
 
 @Component({
   selector: 'app-perfil',
@@ -17,6 +18,8 @@ export class PerfilComponent implements OnInit {
   usuarioRequest = new UsuarioRequest();
   nome = new FormControl(this.usuarioLogado.nome, [Validators.required]);
   email = new FormControl(this.usuarioLogado.email, [Validators.required, Validators.email]);
+
+  matcher = new ErrorStateMatcherGenerico();
 
  
   constructor(
@@ -59,6 +62,18 @@ export class PerfilComponent implements OnInit {
           this.alert.abrirSnackBar('Usuário editado com sucesso.', 'success');          
         })
     }
+  }
+
+  getNomeErroMessage() {
+    return this.nome.hasError('required') ? 'Nome é obrigatório.' : '';
+  }
+
+  getEmailErroMessage() {
+    if (this.email.hasError('email')) {
+      return 'E-mail precisa ser válido.';
+    }
+
+    return this.email.hasError('required') ? 'E-mail é obrigatório' : '';
   }
 
   isValid() {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ErrorStateMatcherGenerico } from 'src/app/models/error-state-matchers';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from '../perfil/usuario.service';
 import { SnackBarService } from '../shared/snack-bar.service';
@@ -24,6 +25,7 @@ export class CadastroComponent implements OnInit {
   nome = new FormControl('', [Validators.required, Validators.minLength(5)]);
   email = new FormControl('', [Validators.required, Validators.email]);
   senha = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  matcher = new ErrorStateMatcherGenerico();
 
   constructor(
     private usuarioService: UsuarioService,
@@ -73,7 +75,7 @@ export class CadastroComponent implements OnInit {
   }
 
   getSenhaErrorMessage(): string {
-    if (this.email.hasError('minlength')) {
+    if (this.senha.hasError('minlength')) {
       return 'Senha precisa ter no mínimo 6 caractéres.'
     }
 

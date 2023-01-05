@@ -1,4 +1,4 @@
-export interface SenhaRequest {
-    senhaAtual: string;
-    senhaNova: string;
+export class SenhaRequest {
+    senhaAtual?: string;
+    senhaNova?: string;
 }

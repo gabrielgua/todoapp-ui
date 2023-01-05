@@ -7,21 +7,23 @@
         <mat-form-field class="dado" color="accent" appearance="outline">
             <mat-icon matSuffix class="icon-perfil">person</mat-icon>
             <mat-label>Nome</mat-label>
-            <input matInput [formControl]="nome" id="nome" style="color: var(--secondary-text-dark);">
+            <input matInput [formControl]="nome" [errorStateMatcher]="matcher" id="nome" style="color: var(--secondary-text-dark);">
+            <mat-error *ngIf="this.nome.invalid">{{getNomeErroMessage()}}</mat-error>
         </mat-form-field>
         <mat-divider></mat-divider>
 
         <mat-form-field class="dado" color="accent" appearance="outline">
             <mat-icon matSuffix class="icon-perfil">email</mat-icon>
             <mat-label>E-mail</mat-label>
-            <input matInput [formControl]="email" id="email" style="color: var(--secondary-text-dark);">
+            <input matInput [formControl]="email" [errorStateMatcher]="matcher" id="email" style="color: var(--secondary-text-dark);">
+            <mat-error *ngIf="this.email.invalid">{{getEmailErroMessage()}}</mat-error>
         </mat-form-field>
         <mat-divider></mat-divider>
 
         <mat-form-field class="dado" color="accent" appearance="outline">
             <mat-icon matSuffix class="icon-perfil">info</mat-icon>
             <mat-label>Role</mat-label>
-            <input matInput disabled="true" [value]="headerService.usuarioLogado.tipo" id="nome" style="color: var(--secondary-text-dark);" >
+            <input matInput disabled="true" [value]="usuarioLogado.tipo" id="nome" style="color: var(--secondary-text-dark);" >
         </mat-form-field>
 
         <mat-divider></mat-divider>

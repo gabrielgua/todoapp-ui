@@ -14,7 +14,7 @@
         <mat-divider></mat-divider>
         <mat-form-field class="dado" color="accent" appearance="outline">
             <mat-label>Nova senha</mat-label>
-            <input matInput formControlName="senhaNova" [errorStateMatcher]="senhaAtualMatcher" id="senhaNova" style="color: var(--secondary-text-dark);">
+            <input matInput formControlName="senhaNova" [errorStateMatcher]="senhaNovaMatcher" id="senhaNova" style="color: var(--secondary-text-dark);">
             <mat-icon matSuffix class="icon-perfil">key</mat-icon>
             <mat-error *ngIf="senhaGroup.invalid">{{getErroSenhaNovaMessage()}}</mat-error>
         </mat-form-field>

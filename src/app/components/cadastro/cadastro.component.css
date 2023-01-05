@@ -17,14 +17,6 @@ mat-form-field {
     color: whitesmoke;
 }
 
-mat-error {
-    font-size: small;
-}
-
-input {
-    font-size: medium;
-}
-
 .btn-cadastro {
     margin-top: 1rem;
     padding: .5rem;

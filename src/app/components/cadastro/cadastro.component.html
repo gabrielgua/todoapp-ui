@@ -5,7 +5,7 @@
     <form #cadastroForm="ngForm" autocomplete="off" (submit)="cadastrar(cadastroForm)">
         <mat-form-field appearance="outline" color="accent" >
             <mat-label>Nome</mat-label>
-            <input class="input-cadastro" matInput [formControl]="nome" type="text" placeholder="Entre com seu nome completo.">
+            <input class="input-cadastro" [errorStateMatcher]="matcher" matInput [formControl]="nome" type="text">
             <button mat-icon-button matSuffix disabled="true">
                 <mat-icon color="accent">person</mat-icon>
             </button>
@@ -13,7 +13,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent" >
             <mat-label>E-mail</mat-label>
-            <input class="input-cadastro" matInput [formControl]="email" type="email" placeholder="Entre com seu e-mail.">
+            <input class="input-cadastro" [errorStateMatcher]="matcher" matInput [formControl]="email" type="email">
             <button mat-icon-button matSuffix disabled="true">
                 <mat-icon color="accent">email</mat-icon>
             </button>
@@ -22,7 +22,7 @@
 
         <mat-form-field appearance="outline" color="accent">
             <mat-label>Senha</mat-label>
-            <input class="input-cadastro" matInput [formControl]="senha" type="{{esconder? 'password' : 'text' }}" placeholder="Entre com a senha.">
+            <input class="input-cadastro" [errorStateMatcher]="matcher" matInput [formControl]="senha" type="{{esconder? 'password' : 'text' }}">
             <button mat-icon-button matSuffix (click)="esconder = !esconder">
                 <mat-icon color="accent">{{esconder? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
