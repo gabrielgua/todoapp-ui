@@ -1,11 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { API_CONFIG } from '../config/api-config';
 import * as CryptoJS from 'crypto-js';
 import { firstValueFrom } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Usuario } from '../models/usuario';
-import { UsuarioService } from '../components/perfil/usuario.service';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -13,8 +12,8 @@ import { UsuarioService } from '../components/perfil/usuario.service';
 })
 export class AuthService {
 
-  oAuthTokenUrl = API_CONFIG.baseUrl + '/oauth2/token';
-  oAuthAuthorizeUrl = API_CONFIG.baseUrl + '/oauth2/authorize';
+  oAuthTokenUrl = environment.baseUrl + '/oauth2/token';
+  oAuthAuthorizeUrl = environment.baseUrl + '/oauth2/authorize';
   jwtPayload: any;
   usuarioLogado = new Usuario();
 
@@ -40,7 +39,7 @@ export class AuthService {
       .replace(/\//g, '_');
 
     
-    const redirectUri = encodeURIComponent(API_CONFIG.oAuthCallBackUrl);
+    const redirectUri = encodeURIComponent(environment.oAuthCallBackUrl);
     const clientId = 'todo-webapp';
     const scope = 'READ WRITE';
     const responseType = 'code';
@@ -78,12 +77,12 @@ export class AuthService {
     const payload = new HttpParams()
       .append('grant_type', 'authorization_code')
       .append('code', code)
-      .append('redirect_uri', API_CONFIG.oAuthCallBackUrl)
+      .append('redirect_uri', environment.oAuthCallBackUrl)
       .append('code_verifier', codeVerifier);
 
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
-      .append('Authorization', API_CONFIG.clientCredentialsEncoded)
+      .append('Authorization', environment.clientCredentialsEncoded)
       
     return firstValueFrom(this.http.post<any>(this.oAuthTokenUrl, payload, {headers}))
       .then((response: any) => {
@@ -99,7 +98,7 @@ export class AuthService {
   gerarTokenComRefreshToken(): Promise<void> {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
-      .append('Authorization', API_CONFIG.clientCredentialsEncoded);
+      .append('Authorization', environment.clientCredentialsEncoded);
 
     const payload = new HttpParams()
       .append('grant_type', 'refresh_token')
@@ -161,7 +160,7 @@ export class AuthService {
   logout() {
     this.limparAccessToken();
     localStorage.clear();
-    window.location.href = API_CONFIG.baseUrl + '/logout?returnTo=' + API_CONFIG.logoutRedirectToUrl;
+    window.location.href = environment.baseUrl + '/logout?returnTo=' + environment.logoutRedirectToUrl;
   }
 }
 
