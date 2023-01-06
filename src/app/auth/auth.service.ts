@@ -44,8 +44,7 @@ export class AuthService {
     const clientId = 'todo-webapp';
     const scope = 'READ WRITE';
     const responseType = 'code';
-    const clientCredentials = environment.clientCredentialsEncoded;
-    console.log(clientCredentials);
+    
     
 
     const params = [
