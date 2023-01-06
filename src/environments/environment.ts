@@ -5,6 +5,5 @@ export const environment = {
   logoutRedirectToUrl: 'http://127.0.0.1:4200/login',
   tokenAllowedDomains: [ /localhost:8080/ ],
   tokenDisallowedRoutes: [/\/oauth2\/token/],
-  clientCredentialsEncoded: `${process.env['CLIENT_CREDENTIALS']}`
-  
+  clientCredentialsEncoded: `Basic dG9kby13ZWJhcHA6RXhiR2Y3WnNCZ0VxdGZ4cUc5eEw=`,
 };

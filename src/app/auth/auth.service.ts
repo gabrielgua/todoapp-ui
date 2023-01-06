@@ -7,6 +7,7 @@ import { Usuario } from '../models/usuario';
 import { environment } from 'src/environments/environment';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,6 +44,9 @@ export class AuthService {
     const clientId = 'todo-webapp';
     const scope = 'READ WRITE';
     const responseType = 'code';
+    const clientCredentials = environment.clientCredentialsEncoded;
+    console.log(clientCredentials);
+    
 
     const params = [
       'response_type=' + responseType,
@@ -83,6 +87,7 @@ export class AuthService {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
       .append('Authorization', environment.clientCredentialsEncoded)
+      
       
     return firstValueFrom(this.http.post<any>(this.oAuthTokenUrl, payload, {headers}))
       .then((response: any) => {
