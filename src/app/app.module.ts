@@ -26,6 +26,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 import localePT from '@angular/common/locales/pt';
 import { HeaderComponent } from './components/header/header.component';
@@ -76,6 +78,7 @@ export function tokenGetter(): string {
     MatTooltipModule,
     FormsModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,
