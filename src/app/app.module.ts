@@ -30,12 +30,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import localePT from '@angular/common/locales/pt';
 import { HeaderComponent } from './components/header/header.component';
 import { AuthorizedComponent } from './components/authorized/authorized.component';
-import { API_CONFIG } from './config/api-config';
 import { AuthInterceptor } from './auth/auth.inteceptor';
 import { LoginComponent } from './components/login/login.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { SenhaComponent } from './components/perfil/senha/senha.component';
+import { environment } from 'src/environments/environment';
 registerLocaleData(localePT);
 
 export function tokenGetter(): string {
@@ -79,8 +79,8 @@ export function tokenGetter(): string {
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: API_CONFIG.tokenAllowedDomains,
-        disallowedRoutes: API_CONFIG.tokenDisallowedRoutes
+        allowedDomains: environment.tokenAllowedDomains,
+        disallowedRoutes: environment.tokenDisallowedRoutes
       }
     })
 
