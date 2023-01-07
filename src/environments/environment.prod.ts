@@ -5,5 +5,5 @@ export const environment = {
   logoutRedirectToUrl: 'https://todoapp-gabrielgua.vercel.app/login',
   tokenAllowedDomains: [ /todoapp-api-production.up.railway.app/ ],
   tokenDisallowedRoutes: [/\/oauth2\/token/],
-  clientCredentialsEncoded: `Basic ${process.env['CLIENT_CREDENTIALS']}`
-};
+  clientCredentialsEncoded: 'Basic '+ process.env['CLIENT_CREDENTIALS']
+}

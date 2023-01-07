@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(process.env['CLIENT_CREDENTIALS']);
+    console.log('Basic '+ process.env['CLIENT_CREDENTIALS']);
     
   }
 
