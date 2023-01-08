@@ -7,60 +7,53 @@
             </button>
         </div>
         <div class="data-hoje">
-            <span class="material-icons" style="color: whitesmoke">today</span>
+            <span class="material-icons" style="color: var(--secondary-text-dark)">today</span>
             <span style="color: var(--primary-dark); ">{{ hoje |  date: 'EEEE, dd/MM/yyyy ':'':'pt-BR'}}</span>
         </div>
     </div>
     <div class="grupo-tarefas-div">
-        <div *ngIf="!TAREFAS.length || !datasETarefas.length" class="nenhuma-tarefa">
+        <div *ngIf="!TAREFAS.length" class="nenhuma-tarefa">
             <p>Não encontramos tarefas.</p>
         </div>
-        <mat-tab-group *ngIf="TAREFAS.length && datasETarefas.length " mat-align-tabs="start">
-            <mat-tab *ngFor="let dt of datasETarefas.reverse(); let iaux = index" [label]="formatarDatas(dt.data)">
-                <div class="tarefas-div">
-                    <div *ngFor="let t of TAREFAS; let i = index">
-                        <mat-card class="tarefa-card" [@finishedBorder]="t.concluida" *ngIf="validarData(t.dataCriacao!, dt.data)">
-                            <div class="id">
-                                <mat-card-title>{{t.titulo}}</mat-card-title>
-                                <mat-card-subtitle style="margin: 0;">{{ t.dataCriacao |  date: 'EEE, dd/MM/yyyy, HH:mm':'':'pt-BR'}}</mat-card-subtitle>
-                                <mat-divider class="responsive-divider"></mat-divider>
-
+        <div *ngFor="let t of TAREFAS">
+            <mat-card class="tarefa-card" [@finishedBorder]="t.concluida">
+                <div class="id">
+                    <mat-card-title>{{t.titulo}}</mat-card-title>
+                    <mat-card-subtitle style="margin: 0;">{{ t.dataCriacao |  date: 'dd/MM/yyyy, HH:mm'}}</mat-card-subtitle>
+                    <mat-divider class="responsive-divider"></mat-divider>
+                </div>
+                <div class="action" [@fadeLeftToRight]="t.statusAnimation">
+                    <div *ngIf="t.concluida">
+                        <mat-card class="div-concluido">
+                            <div>
+                                <span style="color: var(--success); font-size: larger; font-weight: normal;">Concluído</span><br>
+                                <span style="color: var(--success);">{{ t.dataConclusao |  date: 'dd/MM/yyyy, HH:mm'}}</span>
                             </div>
-                            <div class="action" [@fadeLeftToRight]="t.statusAnimation">
-                                <div *ngIf="t.concluida">
-                                    <mat-card class="div-concluido">
-                                        <div>
-                                            <span style="color: var(--success); font-size: larger; font-weight: normal;">Concluído</span><br>
-                                            <span style="color: var(--success);">{{ t.dataConclusao |  date: 'dd/MM/yyyy, HH:mm'}}</span>
-                                        </div>
-                                        
-                                        <div class="actions"> 
-                                            <button (click)="concluirTarefa(t.id)" matTooltip="Desfazer" mat-mini-fab color="primary">
-                                                <mat-icon style="color: white">refresh</mat-icon>
-                                            </button>
-                                            <button mat-icon-button color="primary"(click)="abrirDialog(t.id)" matTooltip="Remover" >
-                                                <mat-icon>delete</mat-icon>
-                                            </button>
-                                        </div>
-                                    </mat-card>
-                                </div>
-                                <div *ngIf="!t.concluida">
-                                    <button (click)="concluirTarefa(t.id)" matTooltip="Concluir" matTooltipPosition="left" mat-fab color="primary" style="margin-right: 1rem;" >
-                                        <mat-icon>check</mat-icon>
-                                    </button>
-                                    <button mat-icon-button color="accent" matTooltip="Editar" (click)="abrirDialogEditTarefa(t.id)">
-                                        <mat-icon>edit</mat-icon>
-                                    </button>
-                                    <button mat-icon-button color="primary" matTooltip="Remover" (click)="abrirDialog(t.id)" >
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </div>
+                            
+                            <div class="actions"> 
+                                <button (click)="concluirTarefa(t.id)" matTooltip="Desfazer" mat-mini-fab color="primary">
+                                    <mat-icon style="color: white">refresh</mat-icon>
+                                </button>
+                                <button mat-icon-button color="primary"(click)="abrirDialog(t.id)" matTooltip="Remover" >
+                                    <mat-icon>delete</mat-icon>
+                                </button>
                             </div>
                         </mat-card>
                     </div>
+                    <div *ngIf="!t.concluida">
+                        <button (click)="concluirTarefa(t.id)" matTooltip="Concluir" matTooltipPosition="left" mat-fab color="primary" style="margin-right: 1rem;" >
+                            <mat-icon>check</mat-icon>
+                        </button>
+                        <button mat-icon-button color="accent" matTooltip="Editar" (click)="abrirDialogEditTarefa(t.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" matTooltip="Remover" (click)="abrirDialog(t.id)" >
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
                 </div>
-            </mat-tab>
-        </mat-tab-group>
+            </mat-card>
+        </div>
     </div>
     
 </div> 

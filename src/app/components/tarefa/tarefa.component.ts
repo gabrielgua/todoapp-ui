@@ -32,7 +32,6 @@ export class TarefaComponent implements OnInit {
   concluido: boolean = false;
   TAREFAS: Array<Tarefa> = [];
   hoje: number = Date.now();
-  datasETarefas: Array<DataTarefa> = [];
   usuarioId: any;
 
   tarefa: Tarefa = {
@@ -61,18 +60,17 @@ export class TarefaComponent implements OnInit {
     this.buscarTodos();
   }
   
-  teste() {
-    return true;
-  }
-
   buscarTodos(id?: number): any {
     this.service.buscarTodos(this.usuarioId)
       .then((tarefas: Tarefa[]) => {
-      this.TAREFAS = tarefas;
-      if (id) {
-        this.setStatusAnimacao(id);
-      }
-      this.separarPorData(this.TAREFAS);
+        this.TAREFAS = tarefas;
+        if (id) {
+          this.setStatusAnimacao(id);
+        }
+    }).catch((error: any) => {
+      this.alert.abrirSnackBar('Erro ao consultar Tarefas.', 'error');
+      console.log(error);
+      
     });
 
   }
@@ -127,7 +125,6 @@ export class TarefaComponent implements OnInit {
 
     this.dialogForm.afterClosed().subscribe(res => {
       if(res) {
-        
         this.salvar(res);
       }
     })
@@ -148,8 +145,9 @@ export class TarefaComponent implements OnInit {
             this.editar(res, id);
           }
         })
-      }).catch(() => {
-        console.log('Erro ao consultar tarefa com id: ' + id);
+      }).catch((error: any) => {
+        this.alert.abrirSnackBar('Erro ao consultar tarefa', 'error');
+        console.log(error);
       });
   }
 
@@ -161,9 +159,9 @@ export class TarefaComponent implements OnInit {
       .then((tarefa: Tarefa) => {
         this.buscarTodos();
         this.alert.abrirSnackBar('Tarefa editada com sucesso.', 'success');
-      }).catch(() => {
-        console.log('Erro ao editar tarefa de id: ' + id);
+      }).catch((error: any) => {
         this.alert.abrirSnackBar('Erro ao editar a tarefa.', 'error');
+        console.log(error);
 
       });
   }
@@ -176,45 +174,9 @@ export class TarefaComponent implements OnInit {
       .then((tarefa: any) => {
         this.buscarTodos();
         this.alert.abrirSnackBar('Tarefa adicionada com sucesso.', 'success');
-      }).catch(() => {
-        console.log('Erro ao adicionar Tarefa');
+      }).catch((error: any) => {
         this.alert.abrirSnackBar('Erro ao adicionar tarefa.', 'error');
+        console.log(error);
       })
-  }
-
-  separarPorData(tarefas: Array<Tarefa>) {
-    tarefas.forEach(t => {
-      var dtDia = new Date(t.dataCriacao!).toDateString();
-      var dtTarefa: DataTarefa = {data: dtDia, tarefas: [t]};
-
-      var i = this.datasETarefas.findIndex(dt => dt.data.includes(dtDia));
-
-      if (i >= 0) {
-        this.datasETarefas[i].tarefas.push(t);
-      } else {
-        this.datasETarefas.push(dtTarefa);
-      }
-    });    
-  }
-
-  validarData(dataCriacao: string, dtData: string): boolean {
-    var dtC = new Date(dataCriacao);
-    if (dtC.toDateString().includes(dtData)) {
-      return true;
-    }
-    return false;
-  }
-
-  formatarDatas(data: string): string {
-    var hj = Date.now();
-    var hoje = new Date(hj).getDay();
-    var dia = new Date(data).getDay();
-    var dataCompleta = new Date(data).toLocaleDateString();
-    
-    if (hoje == dia) {
-      return 'Hoje';
-    }
-
-    return dataCompleta;
   }
 }
