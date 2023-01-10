@@ -38,6 +38,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { SenhaComponent } from './components/perfil/senha/senha.component';
 import { environment } from 'src/environments/environment';
+import { LoaderComponent } from './components/shared/loader/loader.component';
+import { LoaderInterceptor } from './components/shared/loader.interceptor';
 registerLocaleData(localePT);
 
 export function tokenGetter(): string {
@@ -59,6 +61,7 @@ export function tokenGetter(): string {
     PerfilComponent,
     CadastroComponent,
     SenhaComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,6 +98,11 @@ export function tokenGetter(): string {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true
     }
   ],
